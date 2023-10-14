@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:energy_panel/_all.dart';
 
 class SMAWidget extends StatelessWidget {
@@ -38,10 +40,10 @@ class SMAWidget extends StatelessWidget {
                   mainAxisSpacing: 15,
                 ),
                 children: [
-                  _SMADataItem(itemType: _DataItemType.voltage, model: state.model!.sma, width: width),
-                  _SMADataItem(itemType: _DataItemType.current, model: state.model!.sma, width: width),
-                  _SMADataItem(itemType: _DataItemType.consumption, model: state.model!.sma, width: width),
-                  _SMADataItem(itemType: _DataItemType.h24Consumption, model: state.model!.sma, width: width),
+                  _SMADataItem(itemType: _DataItemType.voltage, model: state.model!, width: width),
+                  _SMADataItem(itemType: _DataItemType.current, model: state.model!, width: width),
+                  _SMADataItem(itemType: _DataItemType.consumption, model: state.model!, width: width),
+                  _SMADataItem(itemType: _DataItemType.h24Consumption, model: state.model!, width: width),
                 ],
               );
             } else {
@@ -68,7 +70,7 @@ class _SMADataItem extends StatelessWidget {
     required this.width,
   });
   final _DataItemType itemType;
-  final SmaModel model;
+  final RealtimeModel model;
   late double width;
   late String name;
   late String unit;
@@ -76,21 +78,22 @@ class _SMADataItem extends StatelessWidget {
   late IconData iconData;
   @override
   Widget build(BuildContext context) {
+    final SmaModel smaModel = model.sma;
     if (itemType == _DataItemType.voltage) {
       name = 'Napon';
       unit = 'V';
-      data = model.voltage.toString();
+      data = smaModel.voltage.toString();
       iconData = Icons.bolt_outlined;
     } else if (itemType == _DataItemType.current) {
       name = 'Struja';
       unit = 'A';
-      data = model.current.toString();
+      data = smaModel.current.toString();
       iconData = Icons.keyboard_double_arrow_right_outlined;
     } else if (itemType == _DataItemType.consumption) {
       name = 'Potrošnja';
       unit = 'Ws';
       iconData = Icons.analytics_outlined;
-      data = (model.consumption).toStringAsFixed(3);
+      data = (smaModel.consumption).toStringAsFixed(3);
     } else if (itemType == _DataItemType.h24Consumption) {
       iconData = Icons.score_outlined;
       name = 'Ukupna potrošnja u posljednjih 24h';

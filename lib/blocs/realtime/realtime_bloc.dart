@@ -13,7 +13,7 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
     final eventSource = EventSource('http://192.168.3.8:5000/events');
 
     eventSource.onMessage.listen((event) {
-     // print(event.data);
+      // print(event.data);
       add(SubmitRealtimeEvent(state: RealtimeState(status: RealtimeStateStatus.submittingSuccess, model: RealtimeModel.fromJson(event.data))));
     });
     eventSource.onError.listen((event) {
@@ -22,7 +22,6 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
   }
 
   Future submit(SubmitRealtimeEvent event, Emitter<RealtimeState> emit) async {
-    //print(state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption);
     emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption)));
   }
 }
