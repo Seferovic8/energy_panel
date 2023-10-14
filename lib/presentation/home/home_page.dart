@@ -242,7 +242,7 @@ class LinePainter extends CustomPainter {
           shaders[1]! > 0.05
               ? [
                   ColorsPalette.orangeLine.withOpacity(shaders[1]!),
-                  ColorsPalette.lightBlue.withOpacity(shaders[1]!),
+                  ColorsPalette.purpleLine.withOpacity(shaders[1]!),
                 ]
               : [
                   ColorsPalette.gray2.withOpacity(0.8),
@@ -261,8 +261,8 @@ class LinePainter extends CustomPainter {
           y1,
           shaders[2]! > 0.05
               ? [
-                  ColorsPalette.orangeLine.withOpacity(shaders[2]!),
                   ColorsPalette.lightBlue.withOpacity(shaders[2]!),
+                  ColorsPalette.purpleLine.withOpacity(shaders[2]!),
                 ]
               : [
                   ColorsPalette.gray2.withOpacity(0.8),
@@ -303,21 +303,19 @@ class EnergyFlow extends StatelessWidget {
   late String name;
   late IconData iconData;
   final double width;
-
+  late Color color;
   @override
   Widget build(BuildContext context) {
     if (energyFlowType == _EnergyFlowType.solar) {
+      color = ColorsPalette.yellowBorder;
       iconData = Icons.solar_power_outlined;
       name = 'Solari';
     } else if (energyFlowType == _EnergyFlowType.grid) {
+      color = ColorsPalette.pinkBorder;
       name = 'Mreža';
-      iconData = Icons.transcribe_outlined;
-      // if (solar > consumption) {
-      //   data = solar - consumption;
-      // } else {
-      //   data = consumption - solar;
-      // }
+      iconData = MdiIcons.transmissionTower;
     } else if (energyFlowType == _EnergyFlowType.consumer) {
+      color = ColorsPalette.lightBlue;
       name = 'Potrošač';
       iconData = Icons.cottage;
     }
@@ -326,13 +324,13 @@ class EnergyFlow extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: ColorsPalette.yellowBorder, width: 2),
+        border: Border.all(color: color, width: 2),
         boxShadow: [
           BoxShadow(
             blurRadius: 10,
             spreadRadius: 6,
             blurStyle: BlurStyle.outer,
-            color: ColorsPalette.yellowBorder.withOpacity(0.9),
+            color: color.withOpacity(0.9),
           ),
         ],
       ),
@@ -370,7 +368,7 @@ class EnergyFlow extends StatelessWidget {
                     children: [
                       Icon(
                         iconData,
-                        color: ColorsPalette.yellowBorder,
+                        color: color,
                         size: 30,
                       ),
                       Text(
