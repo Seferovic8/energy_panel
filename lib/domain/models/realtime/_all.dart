@@ -1,3 +1,3 @@
-export 'realtimeModel.dart';
-export 'smaModel.dart';
-export 'inverterModel.dart';
+export 'realtime_model.dart';
+export 'sma_model.dart';
+export 'inverter_model.dart';
