@@ -16,6 +16,5 @@ class ColorsPalette {
   static const lightBlue = Color.fromRGBO(82, 198, 247, 1);
   static const orangeLine = Color.fromRGBO(255, 181, 101, 1);
   static const purpleLine = Color.fromRGBO(176, 184, 255, 1);
-
-// linija ljubicasta #b0b8ff
+  static const grayLine = Color.fromRGBO(120, 120, 120, 1);
 }

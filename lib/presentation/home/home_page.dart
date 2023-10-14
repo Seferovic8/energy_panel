@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, library_private_types_in_public_api
 // ignore_for_file: must_be_immutable
 
-import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:energy_panel/_all.dart';
 
@@ -35,7 +34,6 @@ class HomePage extends StatelessWidget {
       body: ScrollWidget(
         width: width,
         child: SafeArea(
-          //-webkit-gradient(linear,right top,left bottom,from(#216e93),color-stop(#21648a),color-stop(#1f5881),color-stop(#172d5b),to(#191c51))
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -99,7 +97,7 @@ class _DataWidget extends StatelessWidget {
                   ),
                   Text(
                     DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0).toString().replaceAll('00:00:00.000', ''),
-                    style: GoogleFonts.nunitoSans(fontSize: 14, color: ColorsPalette.whiteSmoke),
+                    style: GoogleFonts.nunitoSans(fontSize: 17, color: ColorsPalette.whiteSmoke),
                   ),
                 ],
               ),
@@ -170,8 +168,17 @@ class LinePainter extends CustomPainter {
     required this.width,
   });
 
-  void drawLine(Offset line1X1, Offset line1X2, Offset line1Y1, Offset line1Y2, Offset line2X1, Offset line2X2, Offset line2Y1, Offset line2Y2, Paint paint, Canvas canvas, Shader shader1, Shader shader2) {
-    paint.shader = shader1;
+  void drawLine(Offset line1X1, Offset line1X2, Offset line1Y1, Offset line1Y2, Offset line2X1, Offset line2X2, Offset line2Y1, Offset line2Y2, Paint paint, Canvas canvas) {
+    if (shaders[0]! > 0.05) {
+      paint.shader = ui.Gradient.linear(line1X1, line1Y2, [
+        ColorsPalette.orangeLine,
+        ColorsPalette.lightBlue,
+      ]);
+    } else {
+      paint.color = ColorsPalette.grayLine;
+      paint.shader = null;
+    }
+
     canvas.drawLine(
       line1X1,
       line1Y1,
@@ -182,7 +189,15 @@ class LinePainter extends CustomPainter {
       line1Y2,
       paint,
     );
-    paint.shader = shader2;
+    if (shaders[1]! > 0.05) {
+      paint.shader = ui.Gradient.linear(line2X1, line2Y2, [
+        ColorsPalette.orangeLine,
+        ColorsPalette.purpleLine,
+      ]);
+    } else {
+      paint.color = ColorsPalette.grayLine;
+      paint.shader = null;
+    }
     canvas.drawLine(
       line2X1,
       line2Y1,
@@ -224,50 +239,22 @@ class LinePainter extends CustomPainter {
       line2X2 = Offset(size.width / 2 + 5, size.height * 3 + 4);
       line2Y2 = Offset(width * 0.25 + size.width / 2, size.height * 3 + 4);
 
-      final shader1 = ui.Gradient.linear(
-          line1X1,
-          line1Y2,
-          shaders[0]! > 0.05
-              ? [
-                  ColorsPalette.orangeLine.withOpacity(shaders[0]!),
-                  ColorsPalette.lightBlue.withOpacity(shaders[0]!),
-                ]
-              : [
-                  ColorsPalette.gray2.withOpacity(0.8),
-                  ColorsPalette.gray2.withOpacity(0.3),
-                ]);
-      final shader2 = ui.Gradient.linear(
-          line2X1,
-          line2Y2,
-          shaders[1]! > 0.05
-              ? [
-                  ColorsPalette.orangeLine.withOpacity(shaders[1]!),
-                  ColorsPalette.purpleLine.withOpacity(shaders[1]!),
-                ]
-              : [
-                  ColorsPalette.gray2.withOpacity(0.8),
-                  ColorsPalette.gray2.withOpacity(0.3),
-                ]);
       //final shader2 = shaders[1];
-      drawLine(line1X1, line1X2, line1Y1, line1Y2, line2X1, line2X2, line2Y1, line2Y2, paint, canvas, shader1, shader2); // canvas.drawLine(
+      drawLine(line1X1, line1X2, line1Y1, line1Y2, line2X1, line2X2, line2Y1, line2Y2, paint, canvas); // canvas.drawLine(
     } else if (energyFlowType == _EnergyFlowType.consumer) {
       print('uso');
       final Offset x1 = Offset(size.width + 2, size.height / 2 + 5);
       final Offset y1 = Offset(width * 0.5 + size.width, size.height / 2 + 5);
       //final Offset y1 = Offset(size.width * 7, size.height / 2 + 5);
+      paint.color = ColorsPalette.grayLine;
+      paint.shader = null;
+      if (shaders[2]! > 0.05) {
+        paint.shader = ui.Gradient.linear(x1, y1, [
+          ColorsPalette.lightBlue,
+          ColorsPalette.purpleLine,
+        ]);
+      }
 
-      paint.shader = ui.Gradient.linear(
-          x1,
-          y1,
-          shaders[2]! > 0.05
-              ? [
-                  ColorsPalette.lightBlue.withOpacity(shaders[2]!),
-                  ColorsPalette.purpleLine.withOpacity(shaders[2]!),
-                ]
-              : [
-                  ColorsPalette.gray2.withOpacity(0.8),
-                  ColorsPalette.gray2.withOpacity(0.3),
-                ]);
       canvas.drawLine(x1, y1, paint);
     }
 
