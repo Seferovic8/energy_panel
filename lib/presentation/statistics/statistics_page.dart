@@ -1,14 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, library_private_types_in_public_api
-// ignore_for_file: must_be_immutable
-
 import 'package:energy_panel/_all.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-  static const routeName = '/home';
+class StatisticsPage extends StatelessWidget {
+  const StatisticsPage({super.key});
+  static const routeName = "/statistika";
   @override
   Widget build(BuildContext context) {
-    context.read<RealtimeBloc>().add(LoadRealtimeEvent());
     final mediaQuery = MediaQuery.of(context);
     final height = mediaQuery.size.height;
     final width = mediaQuery.size.width;
@@ -48,6 +44,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 
 class _DataWidget extends StatelessWidget {
   _DataWidget({
@@ -98,32 +95,15 @@ class _DataWidget extends StatelessWidget {
                             mainAxisSpacing: 15,
                           ),
                           children: [
-                            SMAWidget(width: width),
-                            const RealTimeWidget(),
-                            InverterWidget(width: width),
+                            //SMAWidget(width: width),
+                            //const RealTimeWidget(),
+                            //InverterWidget(width: width),
                           ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      EnergyFlow(energyFlowType: EnergyFlowType.solar, width: width),
-                      const SizedBox(height: 150),
-                      Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          EnergyFlow(energyFlowType: EnergyFlowType.consumer, width: width),
-                          SizedBox(width: width * 0.5),
-                          EnergyFlow(energyFlowType: EnergyFlowType.grid, width: width),
-                        ],
-                      ),
-                      const SizedBox(height: 25),
-                    ],
-                  )
+              
                 ],
               ),
             ),

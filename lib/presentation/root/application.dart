@@ -24,6 +24,7 @@ class Application extends StatelessWidget {
           ],
           routes: {
             HomePage.routeName: (context) => const HomePage(),
+            StatisticsPage.routeName: (context) => const StatisticsPage(),
             // SettingsPage.routeName: (context) =>  SettingsPage(),
           },
 

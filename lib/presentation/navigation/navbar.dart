@@ -4,9 +4,9 @@ import 'package:energy_panel/_all.dart';
 enum RouteNamePage { dashboard, statistics }
 
 RouteNamePage getRouteName(String? route) {
-  if (route == '/' || route == 'home') {
+  if (route == '/' || route == HomePage.routeName) {
     return RouteNamePage.dashboard;
-  } else if (route == '/statistika') {
+  } else if (route == StatisticsPage.routeName) {
     return RouteNamePage.statistics;
   }
   return RouteNamePage.statistics;
@@ -49,6 +49,7 @@ class NavBar extends StatelessWidget {
                   width: width,
                   icon: Icons.dashboard_outlined,
                   text: 'Dashboard',
+                  routeName: HomePage.routeName,
                   changeColor: route != RouteNamePage.dashboard,
                 ),
                 const SizedBox(height: 20),
@@ -56,6 +57,7 @@ class NavBar extends StatelessWidget {
                   width: width,
                   icon: Icons.add_chart_outlined,
                   text: 'Statistika',
+                  routeName: StatisticsPage.routeName,
                   changeColor: route != RouteNamePage.statistics,
                 )
               ],
@@ -76,19 +78,23 @@ class NavBar extends StatelessWidget {
 class _TextButton extends StatelessWidget {
   final double width;
   final String text;
+  final String routeName;
   final IconData icon;
   final bool changeColor;
   const _TextButton({
     Key? key,
     required this.width,
     required this.text,
+    required this.routeName,
     required this.icon,
     required this.changeColor,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: () {
+          context.navigator.pushNamed(routeName);
+        },
         child: Row(
           children: [
             Icon(
