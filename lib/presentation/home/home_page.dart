@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
   static const routeName = '/home';
   @override
   Widget build(BuildContext context) {
-    context.read<RealtimeBloc>().add(LoadRealtimeEvent());
     final mediaQuery = MediaQuery.of(context);
     final height = mediaQuery.size.height;
     final width = mediaQuery.size.width;

@@ -12,7 +12,7 @@ class ContextServiceProviderBloc extends StatelessWidget {
           create: (context) => LocalizationBloc(),
         ),
         BlocProvider<RealtimeBloc>(
-          create: (context) => RealtimeBloc(),
+          create: (context) => RealtimeBloc()..add(LoadRealtimeEvent()),
         ),
         BlocProvider<StatisticsBloc>(
           create: (context) => StatisticsBloc(statisticsRepository: context.serviceProvider.statisticsRepository),
