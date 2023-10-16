@@ -1,4 +1,5 @@
 import 'package:energy_panel/_all.dart';
+import 'package:energy_panel/domain/repositories/statistics_repository.dart';
 
 class DevelopmentServiceProvider extends ServiceProvider {
   @override
@@ -17,9 +18,11 @@ class ProductionServiceProvider extends ServiceProvider {
 
 abstract class ServiceProvider {
   late AppSettings appSettings;
+  late IStatisticsRepository statisticsRepository;
 
   Future<void> initAppSettings();
   Future<void> initRespositories() async {
+    statisticsRepository = StatisticsRepository();
   }
 
   Future<void> init() async {

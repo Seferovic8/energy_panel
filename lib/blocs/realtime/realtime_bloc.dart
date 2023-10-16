@@ -10,7 +10,7 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
 
   Future load(LoadRealtimeEvent event, Emitter<RealtimeState> emit) async {
     emit(state.copyWith(status: RealtimeStateStatus.submitting));
-    final eventSource = EventSource('http://192.168.3.8:5000/events');
+    final eventSource = EventSource('http://192.168.3.8:3000/events');
 
     eventSource.onMessage.listen((event) {
       // print(event.data);
