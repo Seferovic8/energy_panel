@@ -56,10 +56,11 @@ class _DataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nowDate = DateTime.now().copyWith(hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
     context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
             statisticsModel: GetStatisticsModel(
-          startDate: DateTime(2023, 10, 17),
-          endDate: DateTime(2023, 10, 18),
+          startDate: nowDate,
+          endDate: nowDate.add(const Duration(days: 1)),
         )));
     return Container(
       height: height,
@@ -95,14 +96,20 @@ class _DataWidget extends StatelessWidget {
                 //         ),
                 //       );
                 //     });
-                DateTime? result = await showDatePicker(
+                final DateTime? result = await showDatePicker(
                   context: context,
                   firstDate: DateTime(2023),
                   lastDate: DateTime.now(),
                   currentDate: DateTime.now(),
                   initialDate: DateTime.now(),
                 );
-                print(result!.add(Duration(days: 1)));
+                if (result != null) {
+                  context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
+                          statisticsModel: GetStatisticsModel(
+                        startDate: result,
+                        endDate: result.add(const Duration(days: 1)),
+                      )));
+                }
               },
               child: Text('Odaberi datum'),
             ),
@@ -169,11 +176,19 @@ class _DailyWidget extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(child: Center(child: BlocBuilder<RealtimeBloc, RealtimeState>(
+        Expanded(child: Center(child: BlocBuilder<StatisticsBloc, StatisticsState>(
           builder: (context, state) {
-            if (state.status == RealtimeStateStatus.submittingSuccess) {
+            if (state.status == StatisticsStateStatus.submittingSuccess) {
+              double consumption = 0;
+              for (final element in state.model!) {
+                consumption += element.consumption / 1000;
+              }
               return Padding(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  'Ukupna potrosnja je $consumption kWh',
+                  style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke),
+                ),
               );
             } else {
               return const Center(child: CircularProgressIndicator());

@@ -12,6 +12,10 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
     emit(state.copyWith(status: StatisticsStateStatus.submitting));
 
     final data = await statisticsRepository.submit(event.statisticsModel);
-    print(data![0]);
+    if (data == null) {
+      emit(state.copyWith(status: StatisticsStateStatus.submittingError));
+      return;
+    }
+    emit(state.copyWith(status: StatisticsStateStatus.submittingSuccess, model: data));
   }
 }
