@@ -2,64 +2,60 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:energy_panel/_all.dart';
 
 class StatisticsModel {
-  final DateTime date;
-  final StatisticsSmaModel sma;
-  final StatisticsInverterModel inverter;
-  final double consumptionPower;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double energy;
   final double consumption;
+  final List<FlSpot> inverterFlSpots;
+  final List<FlSpot> smaFlSpots;
   StatisticsModel({
-    required this.date,
-    required this.sma,
-    required this.inverter,
-    required this.consumptionPower,
+    required this.startDate,
+    required this.endDate,
+    required this.energy,
     required this.consumption,
+    required this.inverterFlSpots,
+    required this.smaFlSpots,
   });
 
   StatisticsModel copyWith({
-    DateTime? date,
-    StatisticsSmaModel? sma,
-    StatisticsInverterModel? inverter,
-    double? consumptionPower,
+    DateTime? startDate,
+    DateTime? endDate,
+    double? energy,
     double? consumption,
+    List<FlSpot>? inverterFlSpots,
+    List<FlSpot>? smaFlSpots,
   }) {
     return StatisticsModel(
-      date: date ?? this.date,
-      sma: sma ?? this.sma,
-      inverter: inverter ?? this.inverter,
-      consumptionPower: consumptionPower ?? this.consumptionPower,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      energy: energy ?? this.energy,
       consumption: consumption ?? this.consumption,
+      inverterFlSpots: inverterFlSpots ?? this.inverterFlSpots,
+      smaFlSpots: smaFlSpots ?? this.smaFlSpots,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'date': date.millisecondsSinceEpoch,
-      'sma': sma.toMap(),
-      'inverter': inverter.toMap(),
-      'consumption_power': consumptionPower,
-      'consumption': consumption,
-    };
   }
 
   factory StatisticsModel.fromMap(Map<String, dynamic> map) {
     return StatisticsModel(
-      date: HttpDate.parse(map['date']),
-      sma: StatisticsSmaModel.fromMap(map['sma'] as Map<String, dynamic>),
-      inverter: StatisticsInverterModel.fromMap(map['inverter'] as Map<String, dynamic>),
-      consumptionPower: map['consumption_power'] as double,
+      startDate: HttpDate.parse(map['start_date']),
+      endDate: HttpDate.parse(map['end_date']),
+      energy: map['energy'] as double,
       consumption: map['consumption'] as double,
+      inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
+      smaFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory StatisticsModel.fromJson(String source) => StatisticsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'StatisticsModel(date: $date, sma: $sma, inverter: $inverter, consumption_power: $consumptionPower, consumption: $consumption)';
+    return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots)';
   }
+
 }

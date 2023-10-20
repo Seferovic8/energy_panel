@@ -9,7 +9,7 @@ enum StatisticsStateStatus {
 
 class StatisticsState {
   final StatisticsStateStatus status;
-  final List<StatisticsModel>? model;
+  final StatisticsModel? model;
   StatisticsState({
     required this.status,
     this.model,
@@ -17,7 +17,7 @@ class StatisticsState {
 
   StatisticsState copyWith({
     StatisticsStateStatus? status,
-    List<StatisticsModel>? model,
+    StatisticsModel? model,
   }) {
     return StatisticsState(
       status: status ?? this.status,

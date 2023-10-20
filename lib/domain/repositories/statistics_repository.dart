@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 abstract class IStatisticsRepository {
-  Future<List<StatisticsModel>?> submit(GetStatisticsModel statisticsModel);
+  Future<StatisticsModel?> submit(GetStatisticsModel statisticsModel);
 }
 
 class StatisticsRepository extends IStatisticsRepository {
-  Future<List<StatisticsModel>?> submit(GetStatisticsModel statisticsModel) async {
+  @override
+  Future<StatisticsModel?> submit(GetStatisticsModel statisticsModel) async {
     print('uso');
     try {
       final response = await http.post(
@@ -18,11 +19,14 @@ class StatisticsRepository extends IStatisticsRepository {
         },
       );
       //final response = await dio.post('http://192.168.3.8:3000/get_last', data: statisticsModel.toJson());
-      final List<dynamic> resp = json.decode(response.body);
-      final data = resp.map((e) {
-        return StatisticsModel.fromMap(e);
-      }).toList();
-      return data;
+      final Map<String, dynamic> resp = json.decode(response.body);
+      // print(json.decode(response.body).runtimeType);
+      print('proso');
+      return StatisticsModel.fromMap(resp);
+      // final data = resp.map((e) {
+      //   return StatisticsModel.fromMap(e);
+      // }).toList();
+      // return data;
     } catch (e) {
       print(e);
       return null;

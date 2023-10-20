@@ -179,14 +179,10 @@ class _DailyWidget extends StatelessWidget {
         Expanded(child: Center(child: BlocBuilder<StatisticsBloc, StatisticsState>(
           builder: (context, state) {
             if (state.status == StatisticsStateStatus.submittingSuccess) {
-              double consumption = 0;
-              for (final element in state.model!) {
-                consumption += element.consumption / 1000;
-              }
               return Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  'Ukupna potrosnja je $consumption kWh',
+                  'Ukupna potrosnja je ${state.model!.consumption} kWh',
                   style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke),
                 ),
               );
