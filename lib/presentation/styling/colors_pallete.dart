@@ -8,7 +8,6 @@ class ColorsPalette {
   static const red = Color.fromRGBO(215, 62, 113, 1);
   static const green = Color.fromRGBO(88, 226, 194, 1);
   static const cardColor = Color.fromRGBO(29, 27, 65, 0.6);
-  static const lightgreen = Color.fromRGBO(88, 226, 194, 1);
   static const gray2 = Color.fromRGBO(180, 181, 190, 1);
   static const gray3 = Color.fromRGBO(73, 81, 111, 1);
 

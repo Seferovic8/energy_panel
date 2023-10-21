@@ -104,10 +104,10 @@ class _SMADataItem extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: ColorsPalette.lightgreen),
+        border: Border.all(color: ColorsPalette.green),
         boxShadow: [
           BoxShadow(
-            color: ColorsPalette.lightgreen.withOpacity(0.2),
+            color: ColorsPalette.green.withOpacity(0.2),
             spreadRadius: 0,
             blurRadius: 7,
             offset: const Offset(0, 0), // changes position of shadow
@@ -118,7 +118,7 @@ class _SMADataItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(iconData, color: ColorsPalette.lightgreen, size: 36),
+          Icon(iconData, color: ColorsPalette.green, size: 36),
           Text('$data $unit', style: GoogleFonts.nunitoSans(fontSize: itemType == _DataItemType.h24Consumption && width <= 1270 ? 15 : 20, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w800)),
           Text(
             name,

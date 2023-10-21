@@ -43,11 +43,11 @@ class RealTimeWidget extends StatelessWidget {
                       ),
                       pointers: [
                         RangePointer(
-                          value: state.model!.sma.power,
+                          value: state.model!.sma.power.abs(),
                           cornerStyle: CornerStyle.bothFlat,
                           width: 0.2,
                           sizeUnit: GaugeSizeUnit.factor,
-                          color: ColorsPalette.lightgreen,
+                          color: state.model!.sma.power > 0 ? ColorsPalette.red : ColorsPalette.green,
                         )
                       ],
                       annotations: <GaugeAnnotation>[
@@ -58,12 +58,12 @@ class RealTimeWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                state.model!.sma.power.toString(),
-                                style: GoogleFonts.nunitoSans(fontSize: 65, color: ColorsPalette.red),
+                                state.model!.sma.power.abs().toString(),
+                                style: GoogleFonts.nunitoSans(fontSize: 65, color: state.model!.sma.power > 0 ? ColorsPalette.red : ColorsPalette.green),
                               ),
                               Text(
                                 'W',
-                                style: GoogleFonts.nunitoSans(fontSize: 65, color: ColorsPalette.red),
+                                style: GoogleFonts.nunitoSans(fontSize: 65, color: state.model!.sma.power > 0 ? ColorsPalette.red : ColorsPalette.green),
                               ),
                             ],
                           ),
