@@ -3,12 +3,12 @@ import 'dart:html';
 
 class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
   RealtimeBloc() : super(initialState()) {
-    on<LoadRealtimeEvent>(load);
-    on<SubmitRealtimeEvent>(submit);
+    on<LoadRealtimeEvent>(_load);
+    on<SubmitRealtimeEvent>(_submit);
   }
   static RealtimeState initialState() => RealtimeState(status: RealtimeStateStatus.initial);
 
-  Future load(LoadRealtimeEvent event, Emitter<RealtimeState> emit) async {
+  Future _load(LoadRealtimeEvent event, Emitter<RealtimeState> emit) async {
     emit(state.copyWith(status: RealtimeStateStatus.submitting));
     final eventSource = EventSource('http://192.168.3.8:3000/events');
 
@@ -21,7 +21,7 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
     });
   }
 
-  Future submit(SubmitRealtimeEvent event, Emitter<RealtimeState> emit) async {
+  Future _submit(SubmitRealtimeEvent event, Emitter<RealtimeState> emit) async {
     emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption)));
   }
 }

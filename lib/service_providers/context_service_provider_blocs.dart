@@ -17,6 +17,9 @@ class ContextServiceProviderBloc extends StatelessWidget {
         BlocProvider<StatisticsBloc>(
           create: (context) => StatisticsBloc(statisticsRepository: context.serviceProvider.statisticsRepository),
         ),
+        BlocProvider<PeriodSelectionBloc>(
+          create: (context) => PeriodSelectionBloc(),
+        ),
 
         // BlocProvider<VideoBloc>(
         //   create: (context) => VideoBloc(),

@@ -1,9 +1,9 @@
 import 'package:energy_panel/_all.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+//import 'package:color/color.dart' as cl;
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});
-  static const routeName = "/statistika";
+  static const routeName = '/statistika';
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -85,34 +85,7 @@ class _DataWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () async {
-                // showDialog(
-                //     context: context,
-                //     builder: (conntext) {
-                //       return Dialog(
-                //         child: SfDateRangePicker(
-                //           view: DateRangePickerView.year,
-                //         ),
-                //       );
-                //     });
-                final DateTime? result = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2023),
-                  lastDate: DateTime.now(),
-                  currentDate: DateTime.now(),
-                  initialDate: DateTime.now(),
-                );
-                if (result != null) {
-                  context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
-                          statisticsModel: GetStatisticsModel(
-                        startDate: result,
-                        endDate: result.add(const Duration(days: 1)),
-                      )));
-                }
-              },
-              child: Text('Odaberi datum'),
-            ),
+            PeriodSelectionWidget(),
             const SizedBox(height: 15),
             Center(
               child: Column(
@@ -150,6 +123,7 @@ class _DataWidget extends StatelessWidget {
   }
 }
 
+
 class _DailyWidget extends StatelessWidget {
   final double width;
 
@@ -169,7 +143,7 @@ class _DailyWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           child: Text(
             textAlign: TextAlign.start,
-            'Inverter',
+            'Potrošnja',
             style: GoogleFonts.nunitoSans(
               fontSize: 17,
               color: ColorsPalette.whiteSmoke,
@@ -181,9 +155,13 @@ class _DailyWidget extends StatelessWidget {
             if (state.status == StatisticsStateStatus.submittingSuccess) {
               return Padding(
                 padding: const EdgeInsets.all(8),
-                child: Text(
-                  'Ukupna potrosnja je ${state.model!.consumption} kWh',
-                  style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke),
+                child: Column(
+                  children: [
+                    Text(
+                      'Ukupna potrosnja u datom periodu je:',
+                      style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke),
+                    ),
+                  ],
                 ),
               );
             } else {

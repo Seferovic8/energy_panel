@@ -17,4 +17,7 @@ class ColorsPalette {
   static const orangeLine = Color.fromRGBO(255, 181, 101, 1);
   static const purpleLine = Color.fromRGBO(176, 184, 255, 1);
   static const grayLine = Color.fromRGBO(120, 120, 120, 1);
+  static const whiteBackgroud = Color.fromRGBO(255, 255, 255, 0.13);
+  static const buttonColor = Color.fromRGBO(24, 33, 66, 1);
+  
 }
