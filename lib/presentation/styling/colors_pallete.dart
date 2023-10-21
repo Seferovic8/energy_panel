@@ -6,6 +6,7 @@ class ColorsPalette {
   static const gray = Color.fromRGBO(140, 139, 166, 1);
   static const blue = Color.fromRGBO(83, 134, 228, 1);
   static const red = Color.fromRGBO(215, 62, 113, 1);
+  static const green = Color.fromRGBO(88, 226, 194, 1);
   static const cardColor = Color.fromRGBO(29, 27, 65, 0.6);
   static const lightgreen = Color.fromRGBO(88, 226, 194, 1);
   static const gray2 = Color.fromRGBO(180, 181, 190, 1);
@@ -19,5 +20,4 @@ class ColorsPalette {
   static const grayLine = Color.fromRGBO(120, 120, 120, 1);
   static const whiteBackgroud = Color.fromRGBO(255, 255, 255, 0.13);
   static const buttonColor = Color.fromRGBO(24, 33, 66, 1);
-  
 }

@@ -103,7 +103,8 @@ class _DataWidget extends StatelessWidget {
                             mainAxisSpacing: 15,
                           ),
                           children: [
-                            ConsumptionWidget(width: width)
+                            ConsumptionWidget(width: width),
+                            EnergyWidget(width: width),
                             //SMAWidget(width: width),
                             //const RealTimeWidget(),
                             //InverterWidget(width: width),
