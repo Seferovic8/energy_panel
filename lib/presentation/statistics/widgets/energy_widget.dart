@@ -43,7 +43,7 @@ class EnergyWidget extends StatelessWidget {
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                         ),
                         TextSpan(
-                          text: ' ${state.model!.energy.toStringAsFixed(2)} kWh',
+                          text: ' ${(state.model!.energy / 1000).toStringAsFixed(3)} kWh',
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                         ),
                       ]),
@@ -57,7 +57,7 @@ class EnergyWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.energy / difference.inDays).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.energy / difference.inDays) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                               ),
                             ]),
@@ -69,7 +69,7 @@ class EnergyWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.energy / difference.inHours).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.energy / difference.inHours) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                               ),
                             ]),
@@ -83,7 +83,7 @@ class EnergyWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.energy / (difference.inDays / 30)).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.energy / (difference.inDays / 30)) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                               ),
                             ]),

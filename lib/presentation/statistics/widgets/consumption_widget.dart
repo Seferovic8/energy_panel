@@ -43,7 +43,7 @@ class ConsumptionWidget extends StatelessWidget {
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                         ),
                         TextSpan(
-                          text: ' ${state.model!.consumption.toStringAsFixed(2)} kWh',
+                          text: ' ${(state.model!.consumption / 1000).toStringAsFixed(3)} kWh',
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                         ),
                       ]),
@@ -57,7 +57,7 @@ class ConsumptionWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.consumption / difference.inDays).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.consumption / difference.inDays) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                               ),
                             ]),
@@ -69,7 +69,7 @@ class ConsumptionWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.consumption / difference.inHours).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.consumption / difference.inHours) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                               ),
                             ]),
@@ -83,7 +83,7 @@ class ConsumptionWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${(state.model!.consumption / (difference.inDays / 30)).toStringAsFixed(2)} kWh',
+                                text: ' ${((state.model!.consumption / (difference.inDays / 30)) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                               ),
                             ]),
