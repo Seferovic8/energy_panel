@@ -39,7 +39,7 @@ class ConsumptionWidget extends StatelessWidget {
                     RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: 'Ukupna potrosnja u datom periodu:',
+                          text: 'Ukupna potrošnja u datom periodu:',
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                         ),
                         TextSpan(
