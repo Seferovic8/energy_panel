@@ -120,7 +120,6 @@ class _PeriodButton extends StatelessWidget {
         child: GestureDetector(
           child: BlocBuilder<PeriodSelectionBloc, PeriodSelectionState>(
             builder: (context, state) {
-              print(state.selected);
               return Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                 decoration: state.selected == buttonType

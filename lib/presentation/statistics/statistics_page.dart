@@ -103,7 +103,7 @@ class _DataWidget extends StatelessWidget {
                             mainAxisSpacing: 15,
                           ),
                           children: [
-                            _DailyWidget(width: width)
+                            ConsumptionWidget(width: width)
                             //SMAWidget(width: width),
                             //const RealTimeWidget(),
                             //InverterWidget(width: width),
@@ -119,57 +119,6 @@ class _DataWidget extends StatelessWidget {
         ),
         //    ],
       ),
-    );
-  }
-}
-
-
-class _DailyWidget extends StatelessWidget {
-  final double width;
-
-  const _DailyWidget({required this.width});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: ColorsPalette.cardColor, borderRadius: BorderRadius.circular(4)),
-      child: Column(children: [
-        Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, .2), style: BorderStyle.solid, width: 2),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-          child: Text(
-            textAlign: TextAlign.start,
-            'Potrošnja',
-            style: GoogleFonts.nunitoSans(
-              fontSize: 17,
-              color: ColorsPalette.whiteSmoke,
-            ),
-          ),
-        ),
-        Expanded(child: Center(child: BlocBuilder<StatisticsBloc, StatisticsState>(
-          builder: (context, state) {
-            if (state.status == StatisticsStateStatus.submittingSuccess) {
-              return Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(
-                      'Ukupna potrosnja u datom periodu je:',
-                      style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke),
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ))),
-      ]),
     );
   }
 }

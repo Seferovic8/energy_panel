@@ -192,7 +192,6 @@ class LinePainter extends CustomPainter {
       //final shader2 = shaders[1];
       drawLine(line1X1, line1X2, line1Y1, line1Y2, line2X1, line2X2, line2Y1, line2Y2, paint, canvas); // canvas.drawLine(
     } else if (energyFlowType == EnergyFlowType.consumer) {
-      print('uso');
       final Offset x1 = Offset(size.width + 2, size.height / 2 + 5);
       final Offset y1 = Offset(width * 0.5 + size.width, size.height / 2 + 5);
       //final Offset y1 = Offset(size.width * 7, size.height / 2 + 5);
