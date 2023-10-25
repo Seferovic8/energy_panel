@@ -10,10 +10,9 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
 
   Future _load(LoadRealtimeEvent event, Emitter<RealtimeState> emit) async {
     emit(state.copyWith(status: RealtimeStateStatus.submitting));
-    final eventSource = EventSource('http://192.168.3.8:3000/events');
+    final eventSource = EventSource('http://192.168.3.8:5000/events');
 
     eventSource.onMessage.listen((event) {
-      // print(event.data);
       add(SubmitRealtimeEvent(state: RealtimeState(status: RealtimeStateStatus.submittingSuccess, model: RealtimeModel.fromJson(event.data))));
     });
     eventSource.onError.listen((event) {
@@ -22,6 +21,6 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
   }
 
   Future _submit(SubmitRealtimeEvent event, Emitter<RealtimeState> emit) async {
-    emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption)));
+    emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption, inverter: state.model != null ? event.state.model!.inverter.copyWith(energy: state.model!.inverter.energy + event.state.model!.inverter.energy) : event.state.model!.inverter.copyWith(energy: event.state.model!.inverter.energy))));
   }
 }

@@ -91,9 +91,9 @@ class _SMADataItem extends StatelessWidget {
       iconData = Icons.keyboard_double_arrow_right_outlined;
     } else if (itemType == _DataItemType.consumption) {
       name = 'Potrošnja';
-      unit = 'Ws';
+      unit = 'W';
       iconData = Icons.analytics_outlined;
-      data = (smaModel.consumption).toStringAsFixed(3);
+      data = model.consumptionPower.toString();
     } else if (itemType == _DataItemType.h24Consumption) {
       iconData = Icons.score_outlined;
       name = 'Ukupna potrošnja u posljednjih 24h';

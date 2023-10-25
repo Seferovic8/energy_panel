@@ -57,14 +57,14 @@ class EnergyFlow extends StatelessWidget {
               data = state.model!.inverter.power / 1000;
             } else if (energyFlowType == EnergyFlowType.grid) {
               final double solar = state.model!.inverter.power;
-              final double consumption = state.model!.sma.power;
+              final double consumption = state.model!.consumptionPower;
               if (solar > consumption) {
                 data = (solar - consumption) / 1000;
               } else {
                 data = (consumption - solar) / 1000;
               }
             } else if (energyFlowType == EnergyFlowType.consumer) {
-              data = state.model!.sma.power / 1000;
+              data = state.model!.consumptionPower / 1000;
             }
             return CustomPaint(
               foregroundPainter: LinePainter(

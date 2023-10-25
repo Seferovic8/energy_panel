@@ -47,7 +47,7 @@ class StatisticsModel {
       energy: map['energy'] as double,
       consumption: map['consumption'] as double,
       inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
-      smaFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
+      smaFlSpots: (map['sma_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
     );
   }
 
@@ -57,5 +57,4 @@ class StatisticsModel {
   String toString() {
     return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots)';
   }
-
 }

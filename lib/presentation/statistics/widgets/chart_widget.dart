@@ -1,4 +1,5 @@
 import 'package:energy_panel/_all.dart';
+
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
   const style = TextStyle(
     fontWeight: FontWeight.bold,
@@ -27,10 +28,7 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
 }
 
 Widget leftTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 15,
-  );
+  const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: ColorsPalette.whiteSmoke);
   String text;
   switch (value.toInt()) {
     case 1:
@@ -48,6 +46,7 @@ Widget leftTitleWidgets(double value, TitleMeta meta) {
 
   return Text(text, style: style, textAlign: TextAlign.left);
 }
+
 class ChartWidget extends StatelessWidget {
   final double width;
 
@@ -55,28 +54,13 @@ class ChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gradientColors = [
-      Color(0xFF216E93),
-      Color(0xFF21648A),
-      Color(0xFF1F5881),
-      Color(0xFF172D5B),
-      Color(0xFF191C51),
+      const Color(0xFF216E93),
+      const Color(0xFF21648A),
+      const Color(0xFF1F5881),
+      const Color(0xFF172D5B),
+      const Color(0xFF191C51),
     ];
-    const List<FlSpot> flspots = [
-      FlSpot(0, 5),
-      FlSpot(1, 4.6),
-      FlSpot(1.6, 2.6),
-      FlSpot(2.5, 2.8),
-      FlSpot(3.4, 4.9),
-      FlSpot(4.6, 5.3),
-      FlSpot(5.5, 7),
-      FlSpot(6.2, 6.9),
-      FlSpot(6.8, 5),
-      FlSpot(7.8, 5.3),
-      FlSpot(8.5, 2),
-      FlSpot(9.2, 2.3),
-      FlSpot(10.3, 4),
-      FlSpot(11, 5),
-    ];
+
     return Container(
       decoration: BoxDecoration(color: ColorsPalette.cardColor, borderRadius: BorderRadius.circular(4)),
       child: Column(children: [
@@ -97,12 +81,16 @@ class ChartWidget extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(child: Center(child: BlocBuilder<RealtimeBloc, RealtimeState>(
-          builder: (context, state) {
-            if (state.status == RealtimeStateStatus.submittingSuccess) {
-              return Padding(
-                padding: EdgeInsets.all(8),
-                child: LineChart(
+        Expanded(
+            child: Center(
+                child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: BlocBuilder<StatisticsBloc, StatisticsState>(
+            builder: (context, state) {
+              if (state.status == StatisticsStateStatus.submittingSuccess) {
+                print(state.model!.smaFlSpots.getRange(20, 50));
+                state.model!.smaFlSpots.map((e) => null);
+                return LineChart(
                   LineChartData(
                     gridData: FlGridData(
                       show: true,
@@ -111,13 +99,13 @@ class ChartWidget extends StatelessWidget {
                       verticalInterval: 1,
                       getDrawingHorizontalLine: (value) {
                         return FlLine(
-                          color: Color(0xFF172D5B),
+                          color: const Color(0xFF172D5B),
                           strokeWidth: 1,
                         );
                       },
                       getDrawingVerticalLine: (value) {
                         return FlLine(
-                          color: Color(0xFF172D5B),
+                          color: const Color(0xFF172D5B),
                           strokeWidth: 1,
                         );
                       },
@@ -152,12 +140,12 @@ class ChartWidget extends StatelessWidget {
                       border: Border.all(color: const Color(0xff37434d)),
                     ),
                     minX: 0,
-                    maxX: 11,
+                    maxX: 40,
                     minY: 0,
-                    maxY: 15,
+                    maxY: 6000,
                     lineBarsData: [
                       LineChartBarData(
-                        spots: flspots,
+                        spots: state.model!.smaFlSpots.getRange(20, 50).toList(),
                         isCurved: true,
                         gradient: LinearGradient(
                           colors: gradientColors,
@@ -179,12 +167,12 @@ class ChartWidget extends StatelessWidget {
 
                   swapAnimationDuration: const Duration(milliseconds: 150), // Optional
                   swapAnimationCurve: Curves.fastOutSlowIn,
-                ),
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ))),
       ]),
     );

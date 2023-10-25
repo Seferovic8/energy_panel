@@ -31,6 +31,8 @@ class InverterWidget extends StatelessWidget {
         Expanded(child: Center(child: BlocBuilder<RealtimeBloc, RealtimeState>(
           builder: (context, state) {
             if (state.status == RealtimeStateStatus.submittingSuccess) {
+              print(state.model!.inverter.power);
+              print(state.model!.inverter.energy);
               return GridView(
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -92,7 +94,7 @@ class _InverterDataItem extends StatelessWidget {
       name = 'Proizvodnja';
       unit = 'W';
       iconData = Icons.solar_power_outlined;
-      data = (model.power).toStringAsFixed(3);
+      data = model.power.toString();
     } else if (itemType == _DataItemType.energy) {
       iconData = Icons.score_outlined;
       name = 'Ukupna proizvodnja u posljednjih 24h';
