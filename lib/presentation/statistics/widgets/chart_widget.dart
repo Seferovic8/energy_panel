@@ -88,7 +88,6 @@ class ChartWidget extends StatelessWidget {
           child: BlocBuilder<StatisticsBloc, StatisticsState>(
             builder: (context, state) {
               if (state.status == StatisticsStateStatus.submittingSuccess) {
-                print(state.model!.smaFlSpots.getRange(20, 50));
                 state.model!.smaFlSpots.map((e) => null);
                 return LineChart(
                   LineChartData(

@@ -106,6 +106,7 @@ class _DataWidget extends StatelessWidget {
                             ConsumptionWidget(width: width),
                             BillWidget(width: width),
                             EnergyWidget(width: width),
+                            GainWidget(width: width),
                           //  ChartWidget(width: width),
                             //SMAWidget(width: width),
                             //const RealTimeWidget(),

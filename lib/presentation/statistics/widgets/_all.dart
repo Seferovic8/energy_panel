@@ -3,3 +3,4 @@ export 'period_selection_widget.dart';
 export 'consumption_widget.dart';
 export 'energy_widget.dart';
 export 'bill_widget.dart';
+export 'gain_widget.dart';

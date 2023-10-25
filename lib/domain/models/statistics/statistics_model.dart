@@ -2,8 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-
 import 'package:energy_panel/_all.dart';
 
 class StatisticsModel {
@@ -11,6 +9,8 @@ class StatisticsModel {
   final DateTime endDate;
   final double energy;
   final double consumption;
+  final double smaPlus ;
+  final double smaMinus;
   final List<FlSpot> inverterFlSpots;
   final List<FlSpot> smaFlSpots;
   StatisticsModel({
@@ -18,6 +18,8 @@ class StatisticsModel {
     required this.endDate,
     required this.energy,
     required this.consumption,
+    required this.smaPlus,
+    required this.smaMinus,
     required this.inverterFlSpots,
     required this.smaFlSpots,
   });
@@ -27,6 +29,8 @@ class StatisticsModel {
     DateTime? endDate,
     double? energy,
     double? consumption,
+    double? smaPlus,
+    double? smaMinus,
     List<FlSpot>? inverterFlSpots,
     List<FlSpot>? smaFlSpots,
   }) {
@@ -35,6 +39,8 @@ class StatisticsModel {
       endDate: endDate ?? this.endDate,
       energy: energy ?? this.energy,
       consumption: consumption ?? this.consumption,
+      smaPlus: smaPlus ?? this.smaPlus,
+      smaMinus: smaMinus ?? this.smaMinus,
       inverterFlSpots: inverterFlSpots ?? this.inverterFlSpots,
       smaFlSpots: smaFlSpots ?? this.smaFlSpots,
     );
@@ -46,6 +52,8 @@ class StatisticsModel {
       endDate: HttpDate.parse(map['end_date']),
       energy: map['energy'] as double,
       consumption: map['consumption'] as double,
+      smaPlus: map['sma_plus'] as double,
+      smaMinus: map['sma_minus'] as double,
       inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
       smaFlSpots: (map['sma_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
     );
@@ -55,6 +63,6 @@ class StatisticsModel {
 
   @override
   String toString() {
-    return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots)';
+    return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots, smaPlus: $smaPlus, smaMinus: $smaMinus)';
   }
 }
