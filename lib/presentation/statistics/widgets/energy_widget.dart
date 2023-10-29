@@ -30,6 +30,7 @@ class EnergyWidget extends StatelessWidget {
           builder: (context, state) {
             if (state.status == StatisticsStateStatus.submittingSuccess) {
               final difference = state.model!.endDate.difference(state.model!.startDate);
+              final differenceForStatistics = DateTime.now().difference(state.model!.startDate);
               return Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
@@ -69,7 +70,7 @@ class EnergyWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${((state.model!.energy / difference.inHours) / 1000).toStringAsFixed(3)} kWh',
+                                text: ' ${((state.model!.energy / differenceForStatistics.inHours) / 1000).toStringAsFixed(3)} kWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                               ),
                             ]),

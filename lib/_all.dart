@@ -14,5 +14,4 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:syncfusion_flutter_gauges/gauges.dart';
 export 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-export 'package:fl_chart/fl_chart.dart';
 export 'package:syncfusion_flutter_datepicker/datepicker.dart';

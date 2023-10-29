@@ -57,6 +57,7 @@ class _PeriodButton extends StatelessWidget {
               startDate: startDate,
               endDate: today,
             )));
+        print(today);
       };
     } else if (buttonType == SelectedPeriodButton.year) {
       name = 'GODINA';
@@ -95,11 +96,11 @@ class _PeriodButton extends StatelessWidget {
                       }
                       final DateTime startDate = dateRange.startDate!;
                       DateTime? endDate = dateRange.endDate;
-                      endDate ??= startDate.add(const Duration(days: 1));
+                      endDate ??= startDate;
                       context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
                               statisticsModel: GetStatisticsModel(
                             startDate: startDate,
-                            endDate: endDate,
+                            endDate: endDate.add(const Duration(days: 1)),
                           )));
                       Navigator.pop(context);
                     },

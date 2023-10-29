@@ -2,17 +2,41 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:intl/intl.dart' as intl;
+
 import 'package:energy_panel/_all.dart';
+
+class Spots {
+  final DateTime date;
+  final double value;
+  Spots({
+    required this.date,
+    required this.value,
+  });
+
+  Spots copyWith({
+    DateTime? date,
+    double? value,
+  }) {
+    return Spots(
+      date: date ?? this.date,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  String toString() => 'Spots(date: $date, value: $value)';
+}
 
 class StatisticsModel {
   final DateTime startDate;
   final DateTime endDate;
   final double energy;
   final double consumption;
-  final double smaPlus ;
+  final double smaPlus;
   final double smaMinus;
-  final List<FlSpot> inverterFlSpots;
-  final List<FlSpot> smaFlSpots;
+  final List<Spots> inverterFlSpots;
+  final List<Spots> smaFlSpots;
   StatisticsModel({
     required this.startDate,
     required this.endDate,
@@ -31,8 +55,8 @@ class StatisticsModel {
     double? consumption,
     double? smaPlus,
     double? smaMinus,
-    List<FlSpot>? inverterFlSpots,
-    List<FlSpot>? smaFlSpots,
+    List<Spots>? inverterFlSpots,
+    List<Spots>? smaFlSpots,
   }) {
     return StatisticsModel(
       startDate: startDate ?? this.startDate,
@@ -54,8 +78,8 @@ class StatisticsModel {
       consumption: map['consumption'] as double,
       smaPlus: map['sma_plus'] as double,
       smaMinus: map['sma_minus'] as double,
-      inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
-      smaFlSpots: (map['sma_flspots'] as Map<dynamic, dynamic>).entries.map((e) => FlSpot(double.parse(e.key), e.value)).toList(),
+      inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => Spots(date: DateTime.parse(e.key), value: e.value)).toList(),
+      smaFlSpots: (map['sma_flspots'] as Map<dynamic, dynamic>).entries.map((e) => Spots(date: DateTime.parse(e.key), value: e.value)).toList(),
     );
   }
 

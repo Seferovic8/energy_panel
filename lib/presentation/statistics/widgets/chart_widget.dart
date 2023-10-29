@@ -1,66 +1,18 @@
+import 'dart:math';
+
 import 'package:energy_panel/_all.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-Widget bottomTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 16,
-  );
-  Widget text;
-  switch (value.toInt()) {
-    case 2:
-      text = const Text('MAR', style: style);
-      break;
-    case 5:
-      text = const Text('JUN', style: style);
-      break;
-    case 8:
-      text = const Text('SEP', style: style);
-      break;
-    default:
-      text = const Text('', style: style);
-      break;
-  }
-
-  return SideTitleWidget(
-    axisSide: meta.axisSide,
-    child: text,
-  );
-}
-
-Widget leftTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: ColorsPalette.whiteSmoke);
-  String text;
-  switch (value.toInt()) {
-    case 1:
-      text = '10K';
-      break;
-    case 3:
-      text = '30k';
-      break;
-    case 5:
-      text = '50k';
-      break;
-    default:
-      return Container();
-  }
-
-  return Text(text, style: style, textAlign: TextAlign.left);
-}
+enum ChartWidgetType { meter, inverter }
 
 class ChartWidget extends StatelessWidget {
   final double width;
+  final ChartWidgetType chartWidgetType;
 
-  const ChartWidget({required this.width});
+  const ChartWidget({required this.width, required this.chartWidgetType});
   @override
   Widget build(BuildContext context) {
-    final gradientColors = [
-      const Color(0xFF216E93),
-      const Color(0xFF21648A),
-      const Color(0xFF1F5881),
-      const Color(0xFF172D5B),
-      const Color(0xFF191C51),
-    ];
-
     return Container(
       decoration: BoxDecoration(color: ColorsPalette.cardColor, borderRadius: BorderRadius.circular(4)),
       child: Column(children: [
@@ -74,7 +26,7 @@ class ChartWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
           child: Text(
             textAlign: TextAlign.start,
-            'Inverter',
+            chartWidgetType == ChartWidgetType.inverter ? 'Graf proizvodnje' : 'Graf potrošnje',
             style: GoogleFonts.nunitoSans(
               fontSize: 17,
               color: ColorsPalette.whiteSmoke,
@@ -88,85 +40,87 @@ class ChartWidget extends StatelessWidget {
           child: BlocBuilder<StatisticsBloc, StatisticsState>(
             builder: (context, state) {
               if (state.status == StatisticsStateStatus.submittingSuccess) {
-                state.model!.smaFlSpots.map((e) => null);
-                return LineChart(
-                  LineChartData(
-                    gridData: FlGridData(
-                      show: true,
-                      drawVerticalLine: true,
-                      horizontalInterval: 1,
-                      verticalInterval: 1,
-                      getDrawingHorizontalLine: (value) {
-                        return FlLine(
-                          color: const Color(0xFF172D5B),
-                          strokeWidth: 1,
-                        );
-                      },
-                      getDrawingVerticalLine: (value) {
-                        return FlLine(
-                          color: const Color(0xFF172D5B),
-                          strokeWidth: 1,
-                        );
-                      },
-                    ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 30,
-                          interval: 1,
-                          getTitlesWidget: bottomTitleWidgets,
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          interval: 1,
-                          getTitlesWidget: leftTitleWidgets,
-                          reservedSize: 42,
-                        ),
-                      ),
-                    ),
-                    borderData: FlBorderData(
-                      show: true,
-                      border: Border.all(color: const Color(0xff37434d)),
-                    ),
-                    minX: 0,
-                    maxX: 40,
-                    minY: 0,
-                    maxY: 6000,
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: state.model!.smaFlSpots.getRange(20, 50).toList(),
-                        isCurved: true,
-                        gradient: LinearGradient(
-                          colors: gradientColors,
-                        ),
-                        barWidth: 5,
-                        isStrokeCapRound: true,
-                        dotData: FlDotData(
-                          show: false,
-                        ),
-                        belowBarData: BarAreaData(
-                          show: true,
-                          gradient: LinearGradient(
-                            colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-                          ),
-                        ),
-                      ),
+                final differenceInDays = state.model!.endDate.difference(state.model!.startDate).inDays;
+                final spots = chartWidgetType == ChartWidgetType.meter ? state.model!.smaFlSpots : state.model!.inverterFlSpots;
+                if (differenceInDays <= 1) {
+                  return SfCartesianChart(
+                    palette: chartWidgetType == ChartWidgetType.meter
+                        ? [
+                            ColorsPalette.red,
+                          ]
+                        : [ColorsPalette.green],
+                    series: <ChartSeries>[
+                      // Renders spline chart
+                      SplineSeries<Spots, DateTime>(
+                        dataSource: spots.toList(),
+                        xValueMapper: (Spots data, _) => data.date,
+                        yValueMapper: (Spots data, _) => data.value.toInt(),
+                      )
                     ],
-                  ),
-
-                  swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-                  swapAnimationCurve: Curves.fastOutSlowIn,
-                );
+                    primaryXAxis: DateTimeAxis(
+                      intervalType: DateTimeIntervalType.hours,
+                      interval: 3,
+                      dateFormat: DateFormat.Hm(),
+                    ),
+                    primaryYAxis: NumericAxis(
+                      axisLabelFormatter: (value) {
+                        return ChartAxisLabel('${value.text} W', GoogleFonts.nunitoSans());
+                      },
+                    ),
+                  );
+                } else if (differenceInDays > 1 && differenceInDays <= 30) {
+                  return SfCartesianChart(
+                    palette: chartWidgetType == ChartWidgetType.meter
+                        ? [
+                            ColorsPalette.red,
+                          ]
+                        : [ColorsPalette.green],
+                    series: <ChartSeries>[
+                      // Renders spline chart
+                      ColumnSeries<Spots, DateTime>(
+                        dataSource: spots.toList(),
+                        xValueMapper: (Spots data, _) => data.date,
+                        yValueMapper: (Spots data, _) => data.value / 1000.toInt(),
+                      )
+                    ],
+                    primaryXAxis: DateTimeAxis(
+                      intervalType: DateTimeIntervalType.days,
+                      interval: 1,
+                      dateFormat: DateFormat.MMMd(),
+                    ),
+                    primaryYAxis: NumericAxis(
+                      axisLabelFormatter: (value) {
+                        return ChartAxisLabel('${value.text} kWh', GoogleFonts.nunitoSans());
+                      },
+                    ),
+                  );
+                } else {
+                  return SfCartesianChart(
+                    palette: chartWidgetType == ChartWidgetType.meter
+                        ? [
+                            ColorsPalette.red,
+                          ]
+                        : [ColorsPalette.green],
+                    series: <ChartSeries>[
+                      // Renders spline chart
+                      ColumnSeries<Spots, DateTime>(
+                        dataSource: spots.toList(),
+                        xValueMapper: (Spots data, _) => data.date,
+                        yValueMapper: (Spots data, _) => data.value / 1000.toInt(),
+                      )
+                    ],
+                    primaryXAxis: DateTimeAxis(
+                      intervalType: DateTimeIntervalType.days,
+                      interval: 1,
+                      dateFormat: DateFormat.M(),
+                    ),
+                    primaryYAxis: NumericAxis(
+                      axisLabelFormatter: (value) {
+                        return ChartAxisLabel('${value.text} kWh', GoogleFonts.nunitoSans());
+                      },
+                    ),
+                  );
+                }
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
