@@ -21,6 +21,10 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
   }
 
   Future _submit(SubmitRealtimeEvent event, Emitter<RealtimeState> emit) async {
-    emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model != null ? state.model!.consumption + event.state.model!.consumption : event.state.model!.consumption, inverter: state.model != null ? event.state.model!.inverter.copyWith(energy: state.model!.inverter.energy + event.state.model!.inverter.energy) : event.state.model!.inverter.copyWith(energy: event.state.model!.inverter.energy))));
+    if (state.model != null) {
+      emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: state.model!.consumption + event.state.model!.consumption, inverter: event.state.model!.inverter.copyWith(energy: state.model!.inverter.energy + event.state.model!.inverter.energy))));
+      return;
+    }
+    emit(event.state.copyWith(model: event.state.model!.copyWith(consumption: event.state.model!.consumption, inverter: event.state.model!.inverter.copyWith(energy: event.state.model!.inverter.energy))));
   }
 }

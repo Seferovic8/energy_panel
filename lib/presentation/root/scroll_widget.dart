@@ -6,7 +6,6 @@ class ScrollWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (width < 1210) {
-      print('scroll');
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: child,

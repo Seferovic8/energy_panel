@@ -93,7 +93,7 @@ class _TextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
-          context.navigator.pushNamed(routeName);
+          context.navigator.pushReplacementNamed(routeName);
         },
         child: Row(
           children: [

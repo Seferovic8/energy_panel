@@ -1,4 +1,5 @@
 import 'package:energy_panel/_all.dart';
+import 'package:http/http.dart';
 //import 'package:color/color.dart' as cl;
 
 class StatisticsPage extends StatelessWidget {
@@ -57,11 +58,13 @@ class _DataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nowDate = DateTime.now().copyWith(hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
-    context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
-            statisticsModel: GetStatisticsModel(
-          startDate: nowDate,
-          endDate: nowDate.add(const Duration(days: 1)),
-        )));
+    if (context.read<StatisticsBloc>().state.model == null) {
+      context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
+              statisticsModel: GetStatisticsModel(
+            startDate: nowDate,
+            endDate: nowDate.add(const Duration(days: 1)),
+          )));
+    }
     return Container(
       height: height,
       constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.16666667),

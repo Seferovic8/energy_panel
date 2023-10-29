@@ -59,7 +59,7 @@ class ChartWidget extends StatelessWidget {
                     ],
                     primaryXAxis: DateTimeAxis(
                       intervalType: DateTimeIntervalType.hours,
-                      interval: 3,
+                      interval: chartWidgetType == ChartWidgetType.meter ? 3 : 1,
                       dateFormat: DateFormat.Hm(),
                     ),
                     primaryYAxis: NumericAxis(

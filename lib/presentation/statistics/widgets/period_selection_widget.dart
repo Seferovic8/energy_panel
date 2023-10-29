@@ -57,7 +57,6 @@ class _PeriodButton extends StatelessWidget {
               startDate: startDate,
               endDate: today,
             )));
-        print(today);
       };
     } else if (buttonType == SelectedPeriodButton.year) {
       name = 'GODINA';
