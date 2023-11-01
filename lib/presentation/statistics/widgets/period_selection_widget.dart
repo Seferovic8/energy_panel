@@ -85,6 +85,7 @@ class _PeriodButton extends StatelessWidget {
                   child: SfDateRangePicker(
                     selectionMode: DateRangePickerSelectionMode.range,
                     showActionButtons: true,
+                    monthViewSettings: const DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
                     maxDate: DateTime.now(),
                     minDate: DateTime.now().subtract(const Duration(days: 370)),
                     view: DateRangePickerView.month,
