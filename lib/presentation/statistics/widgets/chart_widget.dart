@@ -44,6 +44,11 @@ class ChartWidget extends StatelessWidget {
                 final spots = chartWidgetType == ChartWidgetType.meter ? state.model!.smaFlSpots : state.model!.inverterFlSpots;
                 if (differenceInDays <= 1) {
                   return SfCartesianChart(
+                    zoomPanBehavior: ZoomPanBehavior(
+                      enablePanning: true,
+                      enableMouseWheelZooming: true,
+                      
+                    ),
                     palette: chartWidgetType == ChartWidgetType.meter
                         ? [
                             ColorsPalette.red,
