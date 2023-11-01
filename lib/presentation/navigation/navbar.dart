@@ -23,15 +23,24 @@ class NavBar extends StatelessWidget {
     final RouteNamePage route = getRouteName(ModalRoute.of(context)!.settings.name);
     return Container(
       decoration: const BoxDecoration(color: ColorsPalette.navBackground),
-      padding: const EdgeInsets.all(20),
-      constraints: const BoxConstraints(minWidth: 1200 * 0.16666667),
-      width: width * 0.16666667,
+      padding: width > 1660 ? const EdgeInsets.all(20) : const EdgeInsets.all(10),
+      constraints: const BoxConstraints(minWidth: 1200 * 0.12),
+      width: width * 0.12,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'ENERGY PANEL',
-            style: GoogleFonts.nunitoSans(fontWeight: FontWeight.w100, fontSize: 24, color: ColorsPalette.whiteSmoke),
+            style: GoogleFonts.nunitoSans(
+                fontWeight: FontWeight.w100,
+                fontSize: width > 1770
+                    ? 24
+                    : width > 1490
+                        ? 22
+                        : width > 1359
+                            ? 20
+                            : 17,
+                color: ColorsPalette.whiteSmoke),
           ),
           // IconButton(
           //     onPressed: () {
@@ -42,8 +51,9 @@ class NavBar extends StatelessWidget {
           //     focusColor: Colors.blue,
           //     hoverColor: Colors.pinkAccent),
           Padding(
-            padding: EdgeInsets.only(left: width > 1400 ? 20 : 0, top: 65),
+            padding: EdgeInsets.only(left: width > 1410 ? 20 : 0, top: 65),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 _TextButton(
                   width: width,
@@ -103,7 +113,7 @@ class _TextButton extends StatelessWidget {
               size: 30,
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10, right: 0, bottom: 10, left: width > 1200 ? 40 : 10),
+              padding: EdgeInsets.only(top: 10, right: 0, bottom: 10, left: width > 1830 ? 40 : 10),
               child: Text(
                 text,
                 style: GoogleFonts.nunitoSans(color: changeColor ? ColorsPalette.gray : ColorsPalette.whiteSmoke, fontSize: 15, fontWeight: FontWeight.w300),

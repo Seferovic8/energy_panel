@@ -60,9 +60,9 @@ class _DataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.16666667),
+      constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.12),
       padding: const EdgeInsets.only(left: 24, right: 24),
-      width: width - width * 0.16666667,
+      width: width - width * 0.12,
       child: SingleChildScrollView(
         child: Column(
           children: [

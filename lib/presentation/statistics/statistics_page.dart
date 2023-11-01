@@ -67,9 +67,9 @@ class _DataWidget extends StatelessWidget {
     }
     return Container(
       height: height,
-      constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.16666667),
-      padding: const EdgeInsets.only(left: 24, right: 24),
-      width: width - width * 0.16666667,
+      constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.12),
+      padding: width>1600?const EdgeInsets.only(left: 24, right: 24):const EdgeInsets.only(left: 10, right: 10),
+      width: width - width * 0.12,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -78,7 +78,7 @@ class _DataWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Pregled potrošnje u realnom vremenu',
+                  'Statistika',
                   style: GoogleFonts.nunitoSans(fontSize: 24, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w400),
                 ),
                 Text(
