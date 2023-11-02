@@ -35,6 +35,7 @@ class StatisticsModel {
   final double consumption;
   final double smaPlus;
   final double smaMinus;
+  final int chartType;
   final List<Spots> inverterFlSpots;
   final List<Spots> smaFlSpots;
   StatisticsModel({
@@ -44,6 +45,7 @@ class StatisticsModel {
     required this.consumption,
     required this.smaPlus,
     required this.smaMinus,
+    required this.chartType,
     required this.inverterFlSpots,
     required this.smaFlSpots,
   });
@@ -55,6 +57,7 @@ class StatisticsModel {
     double? consumption,
     double? smaPlus,
     double? smaMinus,
+    int? chartType,
     List<Spots>? inverterFlSpots,
     List<Spots>? smaFlSpots,
   }) {
@@ -65,6 +68,7 @@ class StatisticsModel {
       consumption: consumption ?? this.consumption,
       smaPlus: smaPlus ?? this.smaPlus,
       smaMinus: smaMinus ?? this.smaMinus,
+      chartType: chartType ?? this.chartType,
       inverterFlSpots: inverterFlSpots ?? this.inverterFlSpots,
       smaFlSpots: smaFlSpots ?? this.smaFlSpots,
     );
@@ -78,6 +82,7 @@ class StatisticsModel {
       consumption: map['consumption'] as double,
       smaPlus: map['sma_plus'] as double,
       smaMinus: map['sma_minus'] as double,
+      chartType: map['chart_type'] as int,
       inverterFlSpots: (map['inverter_flspots'] as Map<dynamic, dynamic>).entries.map((e) => Spots(date: DateTime.parse(e.key), value: e.value)).toList(),
       smaFlSpots: (map['sma_flspots'] as Map<dynamic, dynamic>).entries.map((e) => Spots(date: DateTime.parse(e.key), value: e.value)).toList(),
     );
@@ -87,6 +92,6 @@ class StatisticsModel {
 
   @override
   String toString() {
-    return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots, smaPlus: $smaPlus, smaMinus: $smaMinus)';
+    return 'StatisticsModel(energy: $energy, consumption: $consumption, inverterFlSpots: $inverterFlSpots, smaFlSpots: $smaFlSpots, smaPlus: $smaPlus, smaMinus: $smaMinus, chartType:$chartType)';
   }
 }

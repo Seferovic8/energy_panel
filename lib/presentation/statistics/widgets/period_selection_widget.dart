@@ -44,6 +44,7 @@ class _PeriodButton extends StatelessWidget {
                 statisticsModel: GetStatisticsModel(
               startDate: startDate,
               endDate: startDate.add(const Duration(days: 1)),
+              chartType: 0,
             )));
       };
     } else if (buttonType == SelectedPeriodButton.month) {
@@ -56,6 +57,7 @@ class _PeriodButton extends StatelessWidget {
                 statisticsModel: GetStatisticsModel(
               startDate: startDate,
               endDate: today,
+              chartType: 1,
             )));
       };
     } else if (buttonType == SelectedPeriodButton.year) {
@@ -64,11 +66,7 @@ class _PeriodButton extends StatelessWidget {
         context.read<PeriodSelectionBloc>().add(ChangeSelctedPeriod(selected: buttonType));
         final DateTime today = DateTime.now();
         final DateTime startDate = DateTime(today.year, 1, 1);
-        context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
-                statisticsModel: GetStatisticsModel(
-              startDate: startDate,
-              endDate: today,
-            )));
+        context.read<StatisticsBloc>().add(SubmitStatisticsEvent(statisticsModel: GetStatisticsModel(startDate: startDate, endDate: today, chartType: 2)));
       };
     } else if (buttonType == SelectedPeriodButton.custom) {
       name = 'ODABERI PERIOD';
@@ -97,10 +95,19 @@ class _PeriodButton extends StatelessWidget {
                       final DateTime startDate = dateRange.startDate!;
                       DateTime? endDate = dateRange.endDate;
                       endDate ??= startDate;
+                      final difference = endDate.add(const Duration(days: 1)).difference(startDate);
+                      int chartType = 0;
+                      if (difference.inDays > 1 && difference.inDays <= 30) {
+                        chartType = 1;
+                      } else if (difference.inDays > 30) {
+                        chartType = 2;
+                      }
+
                       context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
                               statisticsModel: GetStatisticsModel(
                             startDate: startDate,
                             endDate: endDate.add(const Duration(days: 1)),
+                            chartType: chartType,
                           )));
                       Navigator.pop(context);
                     },

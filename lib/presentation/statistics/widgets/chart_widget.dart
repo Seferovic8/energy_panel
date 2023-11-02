@@ -40,14 +40,12 @@ class ChartWidget extends StatelessWidget {
           child: BlocBuilder<StatisticsBloc, StatisticsState>(
             builder: (context, state) {
               if (state.status == StatisticsStateStatus.submittingSuccess) {
-                final differenceInDays = state.model!.endDate.difference(state.model!.startDate).inDays;
                 final spots = chartWidgetType == ChartWidgetType.meter ? state.model!.smaFlSpots : state.model!.inverterFlSpots;
-                if (differenceInDays <= 1) {
+                if (state.model!.chartType == 0) {
                   return SfCartesianChart(
                     zoomPanBehavior: ZoomPanBehavior(
                       enablePanning: true,
                       enableMouseWheelZooming: true,
-                      
                     ),
                     palette: chartWidgetType == ChartWidgetType.meter
                         ? [
@@ -73,7 +71,7 @@ class ChartWidget extends StatelessWidget {
                       },
                     ),
                   );
-                } else if (differenceInDays > 1 && differenceInDays <= 30) {
+                } else if (state.model!.chartType == 1) {
                   return SfCartesianChart(
                     palette: chartWidgetType == ChartWidgetType.meter
                         ? [
@@ -91,7 +89,7 @@ class ChartWidget extends StatelessWidget {
                     primaryXAxis: DateTimeAxis(
                       intervalType: DateTimeIntervalType.days,
                       interval: 1,
-                      dateFormat: DateFormat.MMMd(),
+                      dateFormat: DateFormat.MMMd('bs'),
                     ),
                     primaryYAxis: NumericAxis(
                       axisLabelFormatter: (value) {
@@ -115,9 +113,9 @@ class ChartWidget extends StatelessWidget {
                       )
                     ],
                     primaryXAxis: DateTimeAxis(
-                      intervalType: DateTimeIntervalType.days,
+                      intervalType: DateTimeIntervalType.months,
                       interval: 1,
-                      dateFormat: DateFormat.M(),
+                      dateFormat: DateFormat.MMM('bs'),
                     ),
                     primaryYAxis: NumericAxis(
                       axisLabelFormatter: (value) {

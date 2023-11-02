@@ -57,18 +57,20 @@ class _DataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final nowDate = DateTime.now().copyWith(hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
     if (context.read<StatisticsBloc>().state.model == null) {
       context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
               statisticsModel: GetStatisticsModel(
             startDate: nowDate,
             endDate: nowDate.add(const Duration(days: 1)),
+            chartType: 0,
           )));
     }
     return Container(
       height: height,
       constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.12),
-      padding: width>1600?const EdgeInsets.only(left: 24, right: 24):const EdgeInsets.only(left: 10, right: 10),
+      padding: width > 1600 ? const EdgeInsets.only(left: 24, right: 24) : const EdgeInsets.only(left: 10, right: 10),
       width: width - width * 0.12,
       child: SingleChildScrollView(
         child: Column(
