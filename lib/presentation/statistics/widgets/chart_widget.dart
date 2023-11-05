@@ -9,8 +9,9 @@ enum ChartWidgetType { meter, inverter }
 class ChartWidget extends StatelessWidget {
   final double width;
   final ChartWidgetType chartWidgetType;
+  final ScrollController scrollController;
 
-  const ChartWidget({required this.width, required this.chartWidgetType});
+  const ChartWidget({required this.width, required this.chartWidgetType, required this.scrollController});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,10 +44,11 @@ class ChartWidget extends StatelessWidget {
                 final spots = chartWidgetType == ChartWidgetType.meter ? state.model!.smaFlSpots : state.model!.inverterFlSpots;
                 if (state.model!.chartType == 0) {
                   return SfCartesianChart(
-                    zoomPanBehavior: ZoomPanBehavior(
-                      enablePanning: true,
-                      enableMouseWheelZooming: true,
-                    ),
+                    zoomPanBehavior: ZoomPanBehavior(enablePanning: true, enableMouseWheelZooming: true, enableDoubleTapZooming: true,),
+                    onZoomStart: (zoomingArgs) {
+                      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                    },
+
                     palette: chartWidgetType == ChartWidgetType.meter
                         ? [
                             ColorsPalette.red,

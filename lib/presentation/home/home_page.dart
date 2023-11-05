@@ -56,6 +56,8 @@ class _DataWidget extends StatelessWidget {
   }) : super(key: key);
   final double width;
   final double height;
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,72 +65,77 @@ class _DataWidget extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.12),
       padding: const EdgeInsets.only(left: 24, right: 24),
       width: width - width * 0.12,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Pregled potrošnje u realnom vremenu',
-                  style: GoogleFonts.nunitoSans(fontSize: 24, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0).toString().replaceAll('00:00:00.000', ''),
-                  style: GoogleFonts.nunitoSans(fontSize: 17, color: ColorsPalette.whiteSmoke),
-                ),
-              ],
-            ),
-            const SizedBox(height: 25),
-            Center(
-              child: Column(
+      child: Scrollbar(
+        controller: _scrollController,
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              const SizedBox(height: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: GridView(
-                          shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 15,
-                            mainAxisExtent: 365.5,
-                            mainAxisSpacing: 15,
-                          ),
-                          children: [
-                            SMAWidget(width: width),
-                            const RealTimeWidget(),
-                            InverterWidget(width: width),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Pregled potrošnje u realnom vremenu',
+                    style: GoogleFonts.nunitoSans(fontSize: 24, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w400),
                   ),
-                  const SizedBox(height: 50),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      EnergyFlow(energyFlowType: EnergyFlowType.solar, width: width),
-                      const SizedBox(height: 150),
-                      Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          EnergyFlow(energyFlowType: EnergyFlowType.consumer, width: width),
-                          SizedBox(width: width * 0.5),
-                          EnergyFlow(energyFlowType: EnergyFlowType.grid, width: width),
-                        ],
-                      ),
-                      const SizedBox(height: 25),
-                    ],
-                  )
+                  Text(
+                    DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0).toString().replaceAll('00:00:00.000', ''),
+                    style: GoogleFonts.nunitoSans(fontSize: 17, color: ColorsPalette.whiteSmoke),
+                  ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 25),
+              Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GridView(
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 15,
+                              mainAxisExtent: 365.5,
+                              mainAxisSpacing: 15,
+                            ),
+                            children: [
+                              SMAWidget(width: width),
+                              const RealTimeWidget(),
+                              InverterWidget(width: width),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        EnergyFlow(energyFlowType: EnergyFlowType.solar, width: width),
+                        const SizedBox(height: 150),
+                        Row(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            EnergyFlow(energyFlowType: EnergyFlowType.consumer, width: width),
+                            SizedBox(width: width * 0.5),
+                            EnergyFlow(energyFlowType: EnergyFlowType.grid, width: width),
+                          ],
+                        ),
+                        const SizedBox(height: 25),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          //    ],
         ),
-        //    ],
       ),
     );
   }

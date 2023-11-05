@@ -54,10 +54,10 @@ class _DataWidget extends StatelessWidget {
   });
   final double width;
   final double height;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    
     final nowDate = DateTime.now().copyWith(hour: 0, second: 0, minute: 0, microsecond: 0, millisecond: 0);
     if (context.read<StatisticsBloc>().state.model == null) {
       context.read<StatisticsBloc>().add(SubmitStatisticsEvent(
@@ -72,63 +72,70 @@ class _DataWidget extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 1200 - 1200 * 0.12),
       padding: width > 1600 ? const EdgeInsets.only(left: 24, right: 24) : const EdgeInsets.only(left: 10, right: 10),
       width: width - width * 0.12,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Statistika',
-                  style: GoogleFonts.nunitoSans(fontSize: 24, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0).toString().replaceAll('00:00:00.000', ''),
-                  style: GoogleFonts.nunitoSans(fontSize: 17, color: ColorsPalette.whiteSmoke),
-                ),
-              ],
-            ),
-            const SizedBox(height: 25),
-            PeriodSelectionWidget(),
-            const SizedBox(height: 15),
-            Center(
-              child: Column(
+      child: Scrollbar(
+        thumbVisibility: true,
+        thickness: 10,
+        scrollbarOrientation: ScrollbarOrientation.right, //which side to show scrollbar
+controller: _scrollController,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              const SizedBox(height: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: GridView(
-                          shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 15,
-                            mainAxisExtent: 365.5,
-                            mainAxisSpacing: 15,
-                          ),
-                          children: [
-                            ConsumptionWidget(width: width),
-                            BillWidget(width: width),
-                            EnergyWidget(width: width),
-                            ChartWidget(width: width, chartWidgetType: ChartWidgetType.meter),
-                            GainWidget(width: width),
-                            ChartWidget(width: width, chartWidgetType: ChartWidgetType.inverter),
-                            //  ChartWidget(width: width),
-                            //SMAWidget(width: width),
-                            //const RealTimeWidget(),
-                            //InverterWidget(width: width),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Statistika',
+                    style: GoogleFonts.nunitoSans(fontSize: 24, color: ColorsPalette.whiteSmoke, fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0).toString().replaceAll('00:00:00.000', ''),
+                    style: GoogleFonts.nunitoSans(fontSize: 17, color: ColorsPalette.whiteSmoke),
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 25),
+              PeriodSelectionWidget(),
+              const SizedBox(height: 15),
+              Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GridView(
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 15,
+                              mainAxisExtent: 365.5,
+                              mainAxisSpacing: 15,
+                            ),
+                            children: [
+                              ConsumptionWidget(width: width),
+                              BillWidget(width: width),
+                              EnergyWidget(width: width),
+                              ChartWidget(width: width, chartWidgetType: ChartWidgetType.meter,scrollController: _scrollController,),
+                              GainWidget(width: width),
+                              ChartWidget(width: width, chartWidgetType: ChartWidgetType.inverter,scrollController: _scrollController,),
+                              //  ChartWidget(width: width),
+                              //SMAWidget(width: width),
+                              //const RealTimeWidget(),
+                              //InverterWidget(width: width),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          //    ],
         ),
-        //    ],
       ),
     );
   }
