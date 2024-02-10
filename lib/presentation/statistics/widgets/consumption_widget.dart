@@ -45,7 +45,9 @@ class ConsumptionWidget extends StatelessWidget {
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                         ),
                         TextSpan(
-                          text: ' ${(state.model!.consumption / 1000).toStringAsFixed(3)} kWh',
+                          text: state.model!.consumption / 1000<=1000?
+                              ' ${(state.model!.consumption / 1000).toStringAsFixed(3)} kWh':
+                              ' ${(state.model!.consumption / 1000000).toStringAsFixed(4)} MWh',
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                         ),
                       ]),
@@ -85,7 +87,10 @@ class ConsumptionWidget extends StatelessWidget {
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                               ),
                               TextSpan(
-                                text: ' ${((state.model!.consumption / (difference.inDays / 30)) / 1000).toStringAsFixed(3)} kWh',
+                                text:
+                                ((state.model!.consumption / (difference.inDays / 30)) / 1000)<=1000?
+                              ' ${((state.model!.consumption / (difference.inDays / 30)) / 1000).toStringAsFixed(3)} kWh':
+                              ' ${((state.model!.consumption / (difference.inDays / 30)) / 1000).toStringAsFixed(4)} MWh',
                                 style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                               ),
                             ]),

@@ -64,11 +64,11 @@ class BillWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ' ${(state.model!.consumption / 1000).toStringAsFixed(3)} kWh',
+                              state.model!.consumption / 1000 <= 1000 ? ' ${(state.model!.consumption / 1000).toStringAsFixed(3)} kWh' : ' ${(state.model!.consumption / 1000000).toStringAsFixed(4)} MWh',
                               style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                             ),
                             Text(
-                              ' ${(state.model!.energy / 1000).toStringAsFixed(3)} kWh',
+                              state.model!.energy / 1000 <= 1000 ? ' ${(state.model!.energy / 1000).toStringAsFixed(3)} kWh' : ' ${(state.model!.energy / 1000000).toStringAsFixed(4)} MWh',
                               style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                             ),
                           ],

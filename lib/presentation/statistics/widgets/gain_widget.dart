@@ -50,11 +50,13 @@ class GainWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ' ${(state.model!.smaPlus / 1000).toStringAsFixed(3)} kWh',
+                              state.model!.smaPlus / 1000 <= 1000 ? ' ${(state.model!.smaPlus / 1000).toStringAsFixed(3)} kWh' : ' ${(state.model!.smaPlus / 1000000).toStringAsFixed(4)} MWh',
                               style: GoogleFonts.nunitoSans(color: ColorsPalette.red, fontSize: 20),
                             ),
                             Text(
-                              ' ${(state.model!.smaMinus / 1000).toStringAsFixed(3)} kWh',
+                              state.model!.smaMinus / 1000 <= 1000 ? 
+                              ' ${(state.model!.smaMinus / 1000).toStringAsFixed(3)} kWh' : 
+                              ' ${(state.model!.smaMinus / 1000000).toStringAsFixed(4)} MWh',
                               style: GoogleFonts.nunitoSans(color: ColorsPalette.green, fontSize: 20),
                             ),
                           ],
@@ -69,7 +71,7 @@ class GainWidget extends StatelessWidget {
                           style: GoogleFonts.nunitoSans(color: ColorsPalette.whiteSmoke, fontSize: 18),
                         ),
                         TextSpan(
-                          text: ' ${(total.abs() / 1000).toStringAsFixed(3)} kWh',
+                          text: total.abs() / 1000 <= 1000 ? ' ${(total.abs() / 1000).toStringAsFixed(3)} kWh' : ' ${(total.abs() / 1000000).toStringAsFixed(4)} MWh',
                           style: GoogleFonts.nunitoSans(color: total > 0 ? ColorsPalette.red : ColorsPalette.green, fontSize: 20),
                         ),
                       ]),

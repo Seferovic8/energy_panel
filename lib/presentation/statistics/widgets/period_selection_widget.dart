@@ -97,9 +97,9 @@ class _PeriodButton extends StatelessWidget {
                       endDate ??= startDate;
                       final difference = endDate.add(const Duration(days: 1)).difference(startDate);
                       int chartType = 0;
-                      if (difference.inDays > 1 && difference.inDays <= 30) {
+                      if (difference.inDays > 1 && difference.inDays <= 31) {
                         chartType = 1;
-                      } else if (difference.inDays > 30) {
+                      } else if (difference.inDays > 31) {
                         chartType = 2;
                       }
 

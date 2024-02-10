@@ -44,11 +44,14 @@ class ChartWidget extends StatelessWidget {
                 final spots = chartWidgetType == ChartWidgetType.meter ? state.model!.smaFlSpots : state.model!.inverterFlSpots;
                 if (state.model!.chartType == 0) {
                   return SfCartesianChart(
-                    zoomPanBehavior: ZoomPanBehavior(enablePanning: true, enableMouseWheelZooming: true, enableDoubleTapZooming: true,),
+                    zoomPanBehavior: ZoomPanBehavior(
+                      enablePanning: true,
+                      enableMouseWheelZooming: true,
+                      enableDoubleTapZooming: true,
+                    ),
                     onZoomStart: (zoomingArgs) {
                       scrollController.jumpTo(scrollController.position.maxScrollExtent);
                     },
-
                     palette: chartWidgetType == ChartWidgetType.meter
                         ? [
                             ColorsPalette.red,
