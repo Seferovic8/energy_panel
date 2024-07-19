@@ -2,7 +2,9 @@ import 'package:energy_panel/_all.dart';
 import 'dart:html';
 
 class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
-  RealtimeBloc() : super(initialState()) {
+  final AppSettings appSettings;
+
+  RealtimeBloc({required this.appSettings}) : super(initialState()) {
     on<LoadRealtimeEvent>(_load);
     on<SubmitRealtimeEvent>(_submit);
   }
@@ -10,7 +12,7 @@ class RealtimeBloc extends Bloc<RealtimeEvent, RealtimeState> {
 
   Future _load(LoadRealtimeEvent event, Emitter<RealtimeState> emit) async {
     emit(state.copyWith(status: RealtimeStateStatus.submitting));
-    final eventSource = EventSource('http://192.168.3.8:5000/events');
+    final eventSource = EventSource(appSettings.eventsUrl);
 
     eventSource.onMessage.listen((event) {
       add(SubmitRealtimeEvent(state: RealtimeState(status: RealtimeStateStatus.submittingSuccess, model: RealtimeModel.fromJson(event.data))));

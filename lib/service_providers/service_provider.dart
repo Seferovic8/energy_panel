@@ -22,7 +22,7 @@ abstract class ServiceProvider {
 
   Future<void> initAppSettings();
   Future<void> initRespositories() async {
-    statisticsRepository = StatisticsRepository();
+    statisticsRepository = StatisticsRepository(appSettings: appSettings);
   }
 
   Future<void> init() async {

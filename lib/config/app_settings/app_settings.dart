@@ -6,6 +6,8 @@ class AppSettings {
   final String packageName;
   final String appleServiceId;
   final String restapiurl;
+  final String eventsUrl;
+  final String lastUrl;
   final bool logNetworkTraffic;
   final bool keepRetryingOnNetworkError;
   final bool providesOfflineMode;
@@ -24,6 +26,8 @@ class AppSettings {
     this.versionDisplay = '1.0.32',
     this.packageName = 'com.seferovic.cafesnackdigital',
     this.restapiurl = '',
+    required this.eventsUrl,
+    required this.lastUrl,
     this.stripeCheckoutUrl = '',
     this.logNetworkTraffic = true,
     this.keepRetryingOnNetworkError = true,
